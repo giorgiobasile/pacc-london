@@ -32,7 +32,7 @@ def print_weather_report(temperature: float, windspeed: float):
 
 
 @flow
-def get_weather_with_retries(lat: float, lon: float):
+def get_weather_with_retries(lat: float=38.9, lon: float=-77.0):
     temp = fetch_temperature(lat, lon)
     wind = fetch_windspeed(lat, lon)
     print_weather_report(temp, wind)
@@ -45,6 +45,4 @@ def get_weather_with_retries(lat: float, lon: float):
 
 
 if __name__ == "__main__":
-
-
     get_weather_with_retries(38.9, -77.0)
