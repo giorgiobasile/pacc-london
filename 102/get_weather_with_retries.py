@@ -1,8 +1,9 @@
 import httpx
 from prefect import flow, task, get_run_logger
+from prefect.tasks import task_input_hash
 
 
-@task
+@task(retries=2, persist_result=True, cache_key_fn=task_input_hash)
 def fetch_temperature(lat: float, lon: float):
     base_url = "https://api.open-meteo.com/v1/forecast/"
     weather = httpx.get(
@@ -13,7 +14,7 @@ def fetch_temperature(lat: float, lon: float):
     return most_recent_temp
 
 
-@task
+@task(retries=2, persist_result=True)
 def fetch_windspeed(lat: float, lon: float):
     base_url = "https://api.open-meteo.com/v1/forecast/"
     weather = httpx.get(
@@ -24,13 +25,6 @@ def fetch_windspeed(lat: float, lon: float):
     return most_recent_temp
 
 
-@task
-def save_weather(weather_var: float, filename: str):
-    with open(f"{filename}.csv", "w+") as w:
-        w.write(str(weather_var))
-    return f"Successfully wrote {filename}"
-
-
 @task(log_prints=True)
 def print_weather_report(temperature: float, windspeed: float):
     logger = get_run_logger()
@@ -38,7 +32,7 @@ def print_weather_report(temperature: float, windspeed: float):
 
 
 @flow
-def get_weather(lat: float, lon: float):
+def get_weather_with_retries(lat: float, lon: float):
     temp = fetch_temperature(lat, lon)
     wind = fetch_windspeed(lat, lon)
     print_weather_report(temp, wind)
@@ -51,4 +45,6 @@ def get_weather(lat: float, lon: float):
 
 
 if __name__ == "__main__":
-    get_weather(38.9, -77.0)
+
+
+    get_weather_with_retries(38.9, -77.0)
