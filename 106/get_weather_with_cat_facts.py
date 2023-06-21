@@ -66,7 +66,7 @@ def get_weather_with_cat_facts(lat: float=38.9, lon: float=-77.0, fact_subdeploy
     if not fact_subdeploy:
         fact = fetch_cat_fact()
     else:
-        fact = run_deployment("fetch_cat_fact_deployment/fetch_cat_fact_flow")
+        fact = run_deployment("fetch-cat-fact-flow/fetch_cat_fact_deployment")
 
     return {
         "temp": temp,
