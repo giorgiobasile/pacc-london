@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "prefect-associate"
+name = "pacc-london"
 version = "0.1.0"
 description = ""
 authors = ["Giorgio Basile <giorgio.basile4@gmail.com>"]
