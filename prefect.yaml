@@ -56,3 +56,25 @@ deployments:
     interval: 30.0
     anchor_date: '2023-06-21T13:29:57.990773+00:00'
     timezone: UTC
+- name: weather_cats_deployment
+  version:
+  tags: []
+  description:
+  entrypoint: 106/get_weather_with_cat_facts.py:get_weather_with_cat_facts
+  parameters: {}
+  work_pool:
+    name: local-pool
+    work_queue_name:
+    job_variables: {}
+  schedule:
+- name: fetch_cat_fact_deployment
+  version:
+  tags: []
+  description:
+  entrypoint: 106/get_weather_with_cat_facts.py:fetch_cat_fact_flow
+  parameters: {}
+  work_pool:
+    name: local-pool
+    work_queue_name:
+    job_variables: {}
+  schedule:
