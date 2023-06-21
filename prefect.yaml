@@ -42,3 +42,17 @@ deployments:
     work_queue_name:
     job_variables: {}
   schedule:
+- name: weather_artifacts_deployment
+  version:
+  tags: []
+  description:
+  entrypoint: 105/get_weather_with_artifacts.py:get_weather_with_artifacts
+  parameters: {}
+  work_pool:
+    name: local-pool
+    work_queue_name:
+    job_variables: {}
+  schedule:
+    interval: 30.0
+    anchor_date: '2023-06-21T13:29:57.990773+00:00'
+    timezone: UTC
