@@ -1,5 +1,5 @@
 import httpx
-from prefect import flow, task
+from prefect import flow, task, get_run_logger
 
 
 @task
@@ -31,15 +31,22 @@ def save_weather(weather_var: float, filename: str):
     return f"Successfully wrote {filename}"
 
 
+@task(log_prints=True)
+def print_weather_report(temperature: float, windspeed: float):
+    logger = get_run_logger()
+    logger(f"The current temperature is {temperature} and the windspeed is {windspeed}")
+
+
 @flow
 def pipeline(lat: float, lon: float):
     temp = fetch_temperature(lat, lon)
     wind = fetch_windspeed(lat, lon)
-    temp_result = save_weather(temp, "temperature")
-    wind_result = save_weather(wind, "windspeed")
+    print_weather_report(temp, wind)
+    # temp_result = save_weather(temp, "temperature")
+    # wind_result = save_weather(wind, "windspeed")
     return {
-        "temp": temp_result,
-        "wind": wind_result
+        "temp": temp,
+        "wind": wind
     }
 
 
