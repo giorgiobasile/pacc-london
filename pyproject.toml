@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "prefect-associate"
+version = "0.1.0"
+description = ""
+authors = ["Giorgio Basile <giorgio.basile4@gmail.com>"]
+readme = "README.md"
+packages = [{include = "prefect_associate"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+prefect = "^2.10.16"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
