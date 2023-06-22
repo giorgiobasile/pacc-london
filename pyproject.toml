@@ -9,6 +9,8 @@ packages = [{include = "pacc_london"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 prefect = "^2.10.16"
+prefect-docker = "^0.3.0"
+marvin = "^0.10.0"
 
 
 [build-system]

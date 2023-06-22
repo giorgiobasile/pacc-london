@@ -8,73 +8,34 @@ prefect-version: 2.10.16
 
 # build section allows you to manage and build docker images
 build:
+- prefect_docker.deployments.steps.build_docker_image:
+    id: build_image
+    requires: prefect-docker>=0.3.0
+    image_name: giorgiobasile/pacc-weather-cat-docker
+    tag: 0.0.1
+    dockerfile: auto
+    push: false
 
 # push section allows you to manage if and how this project is uploaded to remote locations
-push:
+push: null
 
 # pull section allows you to provide instructions for cloning this project in remote locations
 pull:
-- prefect.deployments.steps.git_clone:
-    repository: https://github.com/giorgiobasile/pacc-london.git
-    branch: main
+- prefect.deployments.steps.set_working_directory:
+    directory: /opt/prefect/pacc-london
 
 # the deployments section allows you to provide configuration for deploying flows
 deployments:
-- name: first-deploy
-  version:
+- name: null
+  version: null
   tags: []
-  description:
-  entrypoint: 104/flows.py:pipeline
+  description: null
+  schedule: {}
+  flow_name: null
+  entrypoint: null
   parameters: {}
   work_pool:
-    name: local-pool
-    work_queue_name:
-    job_variables: {}
-  schedule:
-- name: weather_deployment
-  version:
-  tags: []
-  description:
-  entrypoint: 102/get_weather_with_retries.py:get_weather_with_retries
-  parameters: {}
-  work_pool:
-    name: local-pool
-    work_queue_name:
-    job_variables: {}
-  schedule:
-- name: weather_artifacts_deployment
-  version:
-  tags: []
-  description:
-  entrypoint: 105/get_weather_with_artifacts.py:get_weather_with_artifacts
-  parameters: {}
-  work_pool:
-    name: local-pool
-    work_queue_name:
-    job_variables: {}
-  schedule:
-    interval: 30.0
-    anchor_date: '2023-06-21T13:29:57.990773+00:00'
-    timezone: UTC
-- name: weather_cats_deployment
-  version:
-  tags: []
-  description:
-  entrypoint: 106/get_weather_with_cat_facts.py:get_weather_with_cat_facts
-  parameters: {}
-  work_pool:
-    name: local-pool
-    work_queue_name:
-    job_variables: {}
-  schedule:
-- name: fetch_cat_fact_deployment
-  version:
-  tags: []
-  description:
-  entrypoint: 106/get_weather_with_cat_facts.py:fetch_cat_fact_flow
-  parameters: {}
-  work_pool:
-    name: local-pool
-    work_queue_name:
-    job_variables: {}
-  schedule:
+    name: null
+    work_queue_name: null
+    job_variables:
+      image: '{{ build_image.image }}'
