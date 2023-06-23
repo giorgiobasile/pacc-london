@@ -11,6 +11,8 @@ python = "^3.11"
 prefect = "^2.10.16"
 prefect-docker = "^0.3.0"
 marvin = "^0.10.0"
+prefect-aws = "^0.3.4"
+earthaccess = "^0.5.2"
 
 
 [build-system]
